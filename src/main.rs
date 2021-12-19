@@ -1,3 +1,7 @@
+#[macro_use]
+extern crate log;
+extern crate env_logger;
+
 use clap::Parser;
 
 mod cli;
@@ -6,6 +10,7 @@ mod sha;
 use cli::*;
 
 fn main() {
+    env_logger::init();
     let args = Args::parse();
 
     match args.action {
@@ -15,8 +20,8 @@ fn main() {
                 println!("{:?}", encoded);
             }
             ShaSubcommand::Decode(args) => {
-                let encoded = sha::decode_sha1_string(&args.wordlist_path, &args.encoded_text);
-                println!("{:?}", encoded);
+                let decoded = sha::decode_sha1_string(&args.wordlist_path, &args.encoded_text);
+                println!("{:?}", decoded);
             }
         },
     }
